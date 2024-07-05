@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Cart;
 use App\Models\Customer;
 use App\Models\Product;
+use App\Models\TransactionDetail;
 use Illuminate\Http\Request;
 
 class CartApiController extends Controller
@@ -64,5 +65,34 @@ class CartApiController extends Controller
 
 
         return response()->json(["message" => "Success Delete Data"]);
+    }
+    public function checkout(Request $request)
+    {
+        $data_customer = Customer::where("user_id", auth()->user()->id)->first();
+        foreach ($request->cart_id as $cart_id) {
+            $data_cart = Cart::where("id", $cart_id)->first();
+
+            TransactionDetail::create([
+                'product_id' => $data_cart->product_id,
+                'customer_id' => $data_customer->id,
+                'total_price' => $data_cart->total_price,
+                'total_qty' => $data_cart->total_qty,
+                'size' => $data_cart->size,
+                'varian' => $data_cart->varian,
+                'status' => "processing",
+                'payment_method' => $request->payment_method,
+                'delivery' => $request->delivery,
+                'tax' => $request->tax,
+            ]);
+            Product::where("id", $data_cart->product_id)->update([
+                'stock' =>  $data_cart->product->stock - $data_cart->total_qty,
+                'sold' => $data_cart->product->sold + $data_cart->total_qty
+            ]);
+            $data_cart->delete();
+        }
+
+
+
+        return response()->json(["message" => "Success Checkout"]);
     }
 }

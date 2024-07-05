@@ -6,6 +6,7 @@ use App\Http\Controllers\API\JadwalApiController;
 use App\Http\Controllers\API\KelasApiController;
 use App\Http\Controllers\API\ProductApiController;
 use App\Http\Controllers\API\ProductCategoryApiController;
+use App\Http\Controllers\API\TransactionDetailApiController;
 use App\Http\Controllers\API\UserApiController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -23,8 +24,9 @@ use Illuminate\Support\Facades\Route;
 
 
 Route::POST('/customer/register', [UserApiController::class, "registerCustomer"]);
-Route::POST('/admin/register', [UserApiController::class, "registerAdmin"]);
+Route::POST('/seller/register', [UserApiController::class, "registerSeller"]);
 Route::POST('/login', [UserApiController::class, "login"]);
+Route::POST('/tes', [UserApiController::class, "tes"]);
 
 
 
@@ -32,6 +34,9 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
 
     Route::GET('/profile', [UserApiController::class, "profile"]);
     Route::PUT('/profile', [UserApiController::class, "editProfile"]);
+    Route::POST('/photo-profile', [UserApiController::class, "editPhotoProfile"]);
+    Route::PUT('/profile-seller', [UserApiController::class, "editProfileSeller"]);
+    Route::PUT('/profile-customer', [UserApiController::class, "editProfileCustomer"]);
 
     //product category
     Route::GET('/product-category', [ProductCategoryApiController::class, "getAll"]);
@@ -51,4 +56,9 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
     Route::POST('/cart', [CartApiController::class, "create"]);
     Route::PUT('/cart/{id}', [CartApiController::class, "update"]);
     Route::DELETE('/cart/{id}', [CartApiController::class, "delete"]);
+    Route::POST('/cart/checkout', [CartApiController::class, "checkout"]);
+    //transaction-detail 
+    Route::GET('/transaction-detail/get-by-customer', [TransactionDetailApiController::class, "getByCustomer"]);
+    Route::GET('/transaction-detail', [TransactionDetailApiController::class, "getAll"]);
+    Route::PUT('/transaction-detail/{id}', [TransactionDetailApiController::class, "changeStatus"]);
 });

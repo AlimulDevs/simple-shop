@@ -2,9 +2,11 @@
 
 namespace App\Http\Controllers\API;
 
+use App\Helpers\DeleteFile;
+use App\Helpers\UploadFile;
 use App\Http\Controllers\Controller;
 use App\Models\Customer;
-
+use App\Models\Seller;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
@@ -28,18 +30,22 @@ class UserApiController extends Controller
 
         return response()->json(["message" => "Success Create Account Customer",]);
     }
-    public function registerAdmin(Request $request)
+    public function registerSeller(Request $request)
     {
         $user = User::create([
-            'role' => "admin",
+            'role' => "seller",
             'name' => $request->name,
             'email' => $request->email,
             'password' => Hash::make($request->password),
         ]);
 
+        Seller::create([
+            'user_id' => $user->id,
+            'description' => $request->description,
+            'address' => $request->address,
+        ]);
 
-
-        return response()->json(["message" => "Success Create Account Admin",]);
+        return response()->json(["message" => "Success Create Account Seller",]);
     }
 
 
@@ -48,7 +54,7 @@ class UserApiController extends Controller
     {
         try {
 
-            $user = User::where("id", auth()->user()->id)->with("guru")->with("siswa.kelas")->first();
+            $user = User::where("id", auth()->user()->id)->with(["customer", "seller"])->first();
             return [
                 'isSuccess' => true,
                 'message' => 'Success Get Profile',
@@ -62,7 +68,7 @@ class UserApiController extends Controller
             ], 500);
         }
     }
-    public function editProfile(Request $request)
+    public function editProfileCustomer(Request $request)
     {
         $user = User::where("id",  auth()->user()->id)->update([
             "email" => $request->email,
@@ -71,12 +77,36 @@ class UserApiController extends Controller
         ]);
 
 
-
+        Customer::where("user_id", auth()->user()->id)->update([
+            "no_hp" => $request->no_hp,
+            "address" => $request->address,
+        ]);
 
 
         return response()->json([
             'isSuccess' => true,
             "message" => "Success Update Profile",
+        ]);
+    }
+    public function editProfileSeller(Request $request)
+    {
+        $user = User::where("id",  auth()->user()->id)->update([
+            "name" => $request->name,
+
+        ]);
+
+        Seller::where("user_id", auth()->user()->id)->update([
+            "description" => $request->description,
+            "address" => $request->address,
+        ]);
+
+
+
+
+
+        return response()->json([
+            'isSuccess' => true,
+            "message" => "Success Update Profile Seller",
         ]);
     }
 
@@ -105,5 +135,39 @@ class UserApiController extends Controller
         } else {
             return response()->json(["message" => "Failed Login, Wrong Password"]);
         }
+    }
+
+
+    public function editPhotoProfile(Request $request)
+    {
+
+        $data_user = User::where("id",  auth()->user()->id)->first();
+
+        if ($data_user->photo_profile_url !== null) {
+            DeleteFile::delete($data_user->photo_profile_url);
+        }
+
+        $photo_profile_url = UploadFile::upload("foto_profile", $request->file("photo_profile_url"));
+
+        $user = User::where("id",  auth()->user()->id)->update([
+            "photo_profile_url" => $photo_profile_url,
+
+
+        ]);
+
+        return response()->json([
+            'isSuccess' => true,
+            "message" => "Success Update Photo Profile",
+        ]);
+    }
+
+    public function tes(Request $request)
+    {
+        $data = $request->name;
+        return response()->json([
+            'isSuccess' => true,
+            "message" => "Success Update Photo Profile",
+            "data" => $data
+        ]);
     }
 }
