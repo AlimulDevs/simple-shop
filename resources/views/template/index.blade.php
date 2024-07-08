@@ -61,11 +61,22 @@
                 </li>
 
 
-                <li class="{{(request()->is('admin/user/*')?'active':'')}}">
-                    <a href="/admin/user/index">
-                        <i class="fas fa-users"></i> <span>Data User</span>
+                <li class="{{(request()->is('customer/*')?'active':'')}}">
+                    <a href="/customer/index">
+                        <i class="fas fa-users"></i> <span>Data Customer</span>
                     </a>
                 </li>
+                <li class="{{(request()->is('product-category/*')?'active':'')}}">
+                    <a href="/product-category/index">
+                        <i class="fas fa-users"></i> <span>Data Category</span>
+                    </a>
+                </li>
+                <li class="{{(request()->is('product/*')?'active':'')}}">
+                    <a href="/product/index">
+                        <i class="fas fa-users"></i> <span>Data Product</span>
+                    </a>
+                </li>
+
 
 
 
