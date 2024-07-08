@@ -6,6 +6,7 @@ use App\Http\Controllers\API\JadwalApiController;
 use App\Http\Controllers\API\KelasApiController;
 use App\Http\Controllers\API\ProductApiController;
 use App\Http\Controllers\API\ProductCategoryApiController;
+use App\Http\Controllers\API\RatingApiController;
 use App\Http\Controllers\API\TransactionDetailApiController;
 use App\Http\Controllers\API\UserApiController;
 use Illuminate\Http\Request;
@@ -61,4 +62,8 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
     Route::GET('/transaction-detail/get-by-customer', [TransactionDetailApiController::class, "getByCustomer"]);
     Route::GET('/transaction-detail', [TransactionDetailApiController::class, "getAll"]);
     Route::PUT('/transaction-detail/{id}', [TransactionDetailApiController::class, "changeStatus"]);
+
+    // rating
+    Route::POST('/rating', [RatingApiController::class, "create"]);
+    Route::DELETE('/rating/{id}', [RatingApiController::class, "delete"]);
 });

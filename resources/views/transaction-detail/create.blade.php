@@ -36,21 +36,18 @@
 
     <div class="card card-primary">
         <div class="card-header">
-            <h3 class="card-title">Edit Data Product Category</h3>
+            <h3 class="card-title">Tambah Data Product Category</h3>
         </div>
         <!-- /.card-header -->
         <!-- form start -->
-        @foreach ($data_product_category as $dtpc)
-
-
-        <form method="POST" action="/product-category/edit" enctype="multipart/form-data">
+        <form method="POST" action="/product-category/create" enctype="multipart/form-data">
             @csrf
             <div class="card-body">
-                <input type="hidden" name="id" value="{{$dtpc->id}}" id="">
+
                 <input type="hidden" name="role" value="dosen">
                 <div class="form-group">
                     <label for="name">Nama</label>
-                    <input value="{{$dtpc->name}}" type="text" name="name" class="form-control" id="name" placeholder="Masukkan Nama">
+                    <input type="text" name="name" class="form-control" id="name" placeholder="Masukkan Nama">
                 </div>
 
 
@@ -60,10 +57,9 @@
             <!-- /.card-body -->
 
             <div class="card-footer">
-                <button type="submit" class="btn btn-primary">Ubah Data</button>
+                <button type="submit" class="btn btn-primary">Tambah Data</button>
             </div>
         </form>
-        @endforeach
     </div>
 
 </div>

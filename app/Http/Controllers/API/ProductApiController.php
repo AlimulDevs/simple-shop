@@ -65,7 +65,7 @@ class ProductApiController extends Controller
     }
     public function getAll()
     {
-        $product = Product::get();
+        $product = Product::with(["product_category", "rating"])->get();
 
 
 
@@ -73,7 +73,7 @@ class ProductApiController extends Controller
     }
     public function getById($id)
     {
-        $product = Product::where("id", $id)->first();
+        $product = Product::where("id", $id)->with(["product_category", "rating"])->first();
         return response()->json(["message" => "Success Get Data By ID", "data" => $product]);
     }
     public function delete($id)

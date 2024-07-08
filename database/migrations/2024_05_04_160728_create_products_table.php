@@ -24,6 +24,7 @@ class CreateProductsTable extends Migration
             $table->string("size");
             $table->longText("description");
             $table->longText("image_url");
+            $table->double("total_rating", 8, 2)->nullable();
             $table->foreign("product_category_id")->references("id")->on("product_categories")->onDelete('cascade')
                 ->onUpdate('cascade');
             $table->timestamps();

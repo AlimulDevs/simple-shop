@@ -40,13 +40,9 @@
 
     <div class="card">
         <div class="card-header">
-            <h1 class="text-center">TABEL PRODUCT CATEGORY</h1>
+            <h1 class="text-center">TABEL TRANSAKSI</h1>
 
-            <div class="text-right">
-                <a class="btn btn-primary" href="/product-category/create-index">
-                    <i class="fas fa-plus"></i> Tambah Data
-                </a>
-            </div>
+
 
 
         </div>
@@ -59,9 +55,17 @@
                 <table class="table table-striped" id="example2">
                     <thead class="text-center">
                         <tr>
-                            <th>Nomor</th>
-                            <th>Kategori</th>
-
+                            <th>No</th>
+                            <th>Nama</th>
+                            <th>Alamat</th>
+                            <th>Produk</th>
+                            <th>Foto</th>
+                            <th>total qty</th>
+                            <th>Total Price</th>
+                            <th>Varian</th>
+                            <th>Ukuran</th>
+                            <th>Pembayaran</th>
+                            <th>Pengiriman</th>
                             <th>Aksi</th>
                         </tr>
                     </thead>
@@ -69,17 +73,24 @@
                         @php
                         $no = 1;
                         @endphp
-                        @foreach ($data_product_category as $dtp )
+                        @foreach ($data_transaction_detail as $dttd )
                         <tr>
                             <td>{{$no++}}</td>
-                            <td>{{$dtp->name}}</td>
-
+                            <td>{{$dttd->customer->user->name}}</td>
+                            <td>{{$dttd->customer->address}}</td>
+                            <td>{{$dttd->product->name}}</td>
+                            <td><img src="{{$dttd->product->image_url}}" width="50px" height="50px" alt=""></td>
+                            <td>{{$dttd->total_qty}}</td>
+                            <td>{{$dttd->total_price}}</td>
+                            <td>{{$dttd->varian}}</td>
+                            <td>{{$dttd->size}}</td>
+                            <td>{{$dttd->payment_method}}</td>
+                            <td>{{$dttd->delivery}}</td>
 
                             <td>
 
 
-                                <a href="/product-category/edit-index/{{$dtp->id}}" class="btn btn-sm btn-warning"><i class="fas fa-edit"></i></a>
-                                <a href="/product-category/delete/{{$dtp->id}}" class="btn btn-sm btn-danger"><i class="fas fa-trash"></i></a>
+                                <a href="/transaction-detail/delete/{{$dttd->id}}" class="btn btn-sm btn-danger"><i class="fas fa-trash"></i></a>
 
                             </td>
 

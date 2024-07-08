@@ -76,6 +76,11 @@
                         <i class="fas fa-users"></i> <span>Data Product</span>
                     </a>
                 </li>
+                <li class="{{(request()->is('transaction-detail/*')?'active':'')}}">
+                    <a href="/transaction-detail/index">
+                        <i class="fas fa-users"></i> <span>Data Transaksi</span>
+                    </a>
+                </li>
 
 
 

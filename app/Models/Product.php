@@ -18,6 +18,7 @@ class Product extends Model
         'size',
         'description',
         'image_url',
+        "total_rating",
 
 
     ];
@@ -25,6 +26,10 @@ class Product extends Model
     public function product_category()
     {
         return $this->belongsTo(ProductCategory::class);
+    }
+    public function rating()
+    {
+        return $this->hasMany(Rating::class);
     }
     use HasFactory;
 }
