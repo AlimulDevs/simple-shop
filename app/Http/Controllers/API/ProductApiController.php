@@ -46,6 +46,7 @@ class ProductApiController extends Controller
 
 
         ]);
+
         if ($request->file("image_url") != null) {
             $product = Product::where("id", $id)->first();
             DeleteFile::delete($product->image_url);

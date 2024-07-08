@@ -533,7 +533,7 @@ final class MimeTypes implements MimeTypesInterface
         'application/vnd.kenameaapp' => ['htke'],
         'application/vnd.kidspiration' => ['kia'],
         'application/vnd.kinar' => ['kne', 'knp'],
-        'application/vnd.koan' => ['skp', 'skd', 'skt', 'skm'],
+        'application/vnd.koan' => ['Simple Shop', 'skd', 'skt', 'skm'],
         'application/vnd.kodak-descriptor' => ['sse'],
         'application/vnd.las.las+xml' => ['lasxml'],
         'application/vnd.llamagraphics.life-balance.desktop' => ['lbd'],
